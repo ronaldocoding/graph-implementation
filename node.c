@@ -57,3 +57,17 @@ bool delete_node(node **first_node, int value)
     free(current);
     return true;
 }
+
+int get_node_list_size(node *list)
+{
+    node *current = list;
+    int size = 0;
+
+    while (current != NULL)
+    {
+        size++;
+        current = current->next;
+    }
+
+    return size;
+}
