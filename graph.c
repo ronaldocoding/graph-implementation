@@ -188,56 +188,56 @@ void show_graph(vertex_list *list)
     }
 }
 
-int main()
-{
-    vertex_list *list1 = NULL;
-    init_graph(&list1);
-    insert_vertex(&list1);
-    insert_vertex(&list1);
-    insert_vertex(&list1);
-    insert_vertex(&list1);
-    insert_vertex(&list1);
+// int main()
+// {
+//     vertex_list *list1 = NULL;
+//     init_graph(&list1);
+//     insert_vertex(&list1);
+//     insert_vertex(&list1);
+//     insert_vertex(&list1);
+//     insert_vertex(&list1);
+//     insert_vertex(&list1);
 
-    insert_edge(&list1, 0, 1, true);
-    insert_edge(&list1, 0, 2, true);
-    insert_edge(&list1, 0, 3, true);
+//     insert_edge(&list1, 0, 1, true);
+//     insert_edge(&list1, 0, 2, true);
+//     insert_edge(&list1, 0, 3, true);
 
-    insert_edge(&list1, 1, 3, true);
-    insert_edge(&list1, 1, 4, true);
+//     insert_edge(&list1, 1, 3, true);
+//     insert_edge(&list1, 1, 4, true);
 
-    insert_edge(&list1, 2, 3, true);
+//     insert_edge(&list1, 2, 3, true);
 
-    insert_edge(&list1, 3, 4, true);
+//     insert_edge(&list1, 3, 4, true);
 
-    show_graph(list1);
-    printf("=================\n");
+//     show_graph(list1);
+//     printf("=================\n");
 
-    remove_vertex(&list1, 3);
+//     remove_vertex(&list1, 3);
 
-    insert_vertex(&list1);
-    insert_vertex(&list1);
+//     insert_vertex(&list1);
+//     insert_vertex(&list1);
 
-    show_graph(list1);
-    printf("=================\n");
+//     show_graph(list1);
+//     printf("=================\n");
 
-    remove_vertex(&list1, 4);
+//     remove_vertex(&list1, 4);
 
-    show_graph(list1);
-    printf("=================\n");
+//     show_graph(list1);
+//     printf("=================\n");
 
-    insert_vertex(&list1);
+//     insert_vertex(&list1);
 
-    show_graph(list1);
-    printf("=================\n");
+//     show_graph(list1);
+//     printf("=================\n");
 
-    insert_edge(&list1, 2, 7, true);
-    insert_edge(&list1, 2, 4, true);
+//     insert_edge(&list1, 2, 7, true);
+//     insert_edge(&list1, 2, 4, true);
 
-    show_graph(list1);
-    printf("=================\n");
+//     show_graph(list1);
+//     printf("=================\n");
 
-    destroy_graph(&list1);
+//     destroy_graph(&list1);
 
-    show_graph(list1);
-    printf("=================\n");
-}
+//     show_graph(list1);
+//     printf("=================\n");
+// }
