@@ -11,6 +11,7 @@ typedef struct vertex
 typedef struct vertex_list
 {
     int vertex_list_size;
+    int del_count;
     vertex **vertex_list;
 } vertex_list;
 
@@ -19,12 +20,12 @@ void insert_vertex(vertex_list **list)
     int index = (*list)->vertex_list_size;
 
     (*list)->vertex_list[index] = malloc(sizeof(vertex));
-    (*list)->vertex_list[index]->id = index;
+    (*list)->vertex_list[index]->id = index + (*list)->del_count;
     (*list)->vertex_list[index]->adj_list = NULL;
 
     (*list)->vertex_list_size++;
 
-    (*list)->vertex_list = realloc((*list)->vertex_list, sizeof(vertex) * (index + 1));
+    (*list)->vertex_list = realloc((*list)->vertex_list, sizeof(vertex) * ((*list)->vertex_list_size + 1));
     (*list)->vertex_list[index + 1] = NULL;
 }
 
@@ -33,6 +34,7 @@ void init_graph(vertex_list **list)
     (*list) = malloc(sizeof(vertex_list));
     (*list)->vertex_list = malloc(sizeof(vertex *));
     (*list)->vertex_list_size = 0;
+    (*list)->del_count = 0;
     (*list)->vertex_list[0] = NULL;
 }
 
@@ -95,6 +97,44 @@ bool remove_edge(vertex_list **list, int vertex_a_id, int vertex_b_id)
     return false;
 }
 
+bool remove_vertex(vertex_list **list, int vertex_id)
+{
+    bool vertex_exists = false;
+    int vertex_pos;
+    for (int i = 0; i < (*list)->vertex_list_size; i++)
+    {
+        if ((*list)->vertex_list[i]->id == vertex_id)
+        {
+            vertex_exists = true;
+            vertex_pos = i;
+        }
+        else
+        {
+            delete_node(&((*list)->vertex_list[i]->adj_list), vertex_id);
+        }
+    }
+    if (!vertex_exists)
+    {
+        return false;
+    }
+
+    free((*list)->vertex_list[vertex_pos]);
+
+    for (int i = vertex_pos; i < (*list)->vertex_list_size - 1; i++)
+    {
+        (*list)->vertex_list[i] = (*list)->vertex_list[i + 1];
+    }
+    free((*list)->vertex_list[(*list)->vertex_list_size]);
+
+    (*list)->del_count++;
+    (*list)->vertex_list_size--;
+
+    (*list)->vertex_list = realloc((*list)->vertex_list, sizeof(vertex) * ((*list)->vertex_list_size + 1));
+    (*list)->vertex_list[(*list)->vertex_list_size] = NULL;
+
+    return true;
+}
+
 int get_out_degree(vertex_list *list, int vertex_id)
 {
     for (int i = 0; i < list->vertex_list_size; i++)
@@ -147,22 +187,41 @@ int main()
     insert_vertex(&list1);
     insert_vertex(&list1);
 
-    insert_edge(&list1, 0, 1, false);
-    insert_edge(&list1, 0, 2, false);
-    insert_edge(&list1, 0, 3, false);
+    insert_edge(&list1, 0, 1, true);
+    insert_edge(&list1, 0, 2, true);
+    insert_edge(&list1, 0, 3, true);
 
-    insert_edge(&list1, 1, 3, false);
-    insert_edge(&list1, 1, 4, false);
+    insert_edge(&list1, 1, 3, true);
+    insert_edge(&list1, 1, 4, true);
 
-    insert_edge(&list1, 2, 3, false);
+    insert_edge(&list1, 2, 3, true);
 
-    insert_edge(&list1, 3, 4, false);
-
-    show_graph(list1);
-
-    remove_edge(&list1, 0, 3);
+    insert_edge(&list1, 3, 4, true);
 
     show_graph(list1);
-    // printf("out degree: %d\n", get_out_degree(list1, 0));
-    // printf("in degree: %d\n", get_in_degree(list1, 2));
+    printf("=================\n");
+
+    remove_vertex(&list1, 3);
+
+    insert_vertex(&list1);
+    insert_vertex(&list1);
+
+    show_graph(list1);
+    printf("=================\n");
+
+    remove_vertex(&list1, 4);
+
+    show_graph(list1);
+    printf("=================\n");
+
+    insert_vertex(&list1);
+
+    show_graph(list1);
+    printf("=================\n");
+
+    insert_edge(&list1, 2, 7, true);
+    insert_edge(&list1, 2, 4, true);
+
+    show_graph(list1);
+    printf("=================\n");
 }

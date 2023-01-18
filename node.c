@@ -38,6 +38,12 @@ bool delete_node(node **first_node, int value)
 {
     node *current = *(first_node), *previous;
     previous = current;
+
+    if (current == NULL)
+    {
+        return false;
+    }
+
     while (current->value != value)
     {
         previous = current;
