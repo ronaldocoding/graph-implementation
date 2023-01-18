@@ -135,6 +135,17 @@ bool remove_vertex(vertex_list **list, int vertex_id)
     return true;
 }
 
+void destroy_graph(vertex_list **list)
+{
+    if ((*list)->vertex_list[0] == NULL)
+    {
+        (*list)->del_count = 0;
+        return;
+    }
+    remove_vertex(list, (*list)->vertex_list[0]->id);
+    destroy_graph(list);
+}
+
 int get_out_degree(vertex_list *list, int vertex_id)
 {
     for (int i = 0; i < list->vertex_list_size; i++)
@@ -221,6 +232,11 @@ int main()
 
     insert_edge(&list1, 2, 7, true);
     insert_edge(&list1, 2, 4, true);
+
+    show_graph(list1);
+    printf("=================\n");
+
+    destroy_graph(&list1);
 
     show_graph(list1);
     printf("=================\n");
