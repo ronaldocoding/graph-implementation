@@ -68,6 +68,33 @@ bool insert_edge(vertex_list **list, int origin_vertex_id, int destiny_vertex_id
     return true;
 }
 
+bool remove_edge(vertex_list **list, int vertex_a_id, int vertex_b_id)
+{
+    bool deleted_a = false, deleted_b = false;
+
+    for (int i = 0; i < (*list)->vertex_list_size; i++)
+    {
+        if ((*list)->vertex_list[i]->id == vertex_a_id)
+        {
+            delete_node(&((*list)->vertex_list[i]->adj_list), vertex_b_id);
+            deleted_a = true;
+        }
+
+        if ((*list)->vertex_list[i]->id == vertex_b_id)
+        {
+            delete_node(&((*list)->vertex_list[i]->adj_list), vertex_a_id);
+            deleted_b = true;
+        }
+
+        if (deleted_a && deleted_b)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 int get_out_degree(vertex_list *list, int vertex_id)
 {
     for (int i = 0; i < list->vertex_list_size; i++)
@@ -77,6 +104,22 @@ int get_out_degree(vertex_list *list, int vertex_id)
             return get_node_list_size(list->vertex_list[i]->adj_list);
         }
     }
+}
+
+int get_in_degree(vertex_list *list, int vertex_id)
+{
+    int in_degree = 0;
+    for (int i = 0; i < list->vertex_list_size; i++)
+    {
+        if (list->vertex_list[i]->id != vertex_id)
+        {
+            if (is_value_on_node_list(list->vertex_list[i]->adj_list, vertex_id))
+            {
+                in_degree++;
+            }
+        }
+    }
+    return in_degree;
 }
 
 void show_graph(vertex_list *list)
@@ -116,5 +159,10 @@ int main()
     insert_edge(&list1, 3, 4, false);
 
     show_graph(list1);
-    printf("out degree: %d\n", get_out_degree(list1, 0));
+
+    remove_edge(&list1, 0, 3);
+
+    show_graph(list1);
+    // printf("out degree: %d\n", get_out_degree(list1, 0));
+    // printf("in degree: %d\n", get_in_degree(list1, 2));
 }

@@ -38,14 +38,14 @@ bool delete_node(node **first_node, int value)
 {
     node *current = *(first_node), *previous;
     previous = current;
-    while (current->value != value && current != NULL)
+    while (current->value != value)
     {
         previous = current;
         current = current->next;
-    }
-    if (current == NULL)
-    {
-        return false;
+        if (current == NULL)
+        {
+            return false;
+        }
     }
     if (previous == current)
     {
@@ -70,4 +70,18 @@ int get_node_list_size(node *list)
     }
 
     return size;
+}
+
+bool is_value_on_node_list(node *list, int value)
+{
+    node *current = list;
+    while (current != NULL)
+    {
+        if (current->value == value)
+        {
+            return true;
+        }
+        current = current->next;
+    }
+    return false;
 }
