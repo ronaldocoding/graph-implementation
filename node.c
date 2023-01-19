@@ -8,21 +8,24 @@
 typedef struct node
 {
     int value;
+    int weight;
     struct node *next;
 } node;
 
-node *create_node(int value)
+node *create_node(int value, int weight)
 {
     node *new = (node *)malloc(sizeof(node));
     new->value = value;
+    new->weight = weight;
     new->next = NULL;
+    return new;
 }
 
-void insert_node(node **first_node, int value)
+void insert_node(node **first_node, int value, int weight)
 {
     if ((*first_node) == NULL)
     {
-        (*first_node) = create_node(value);
+        (*first_node) = create_node(value, weight);
         return;
     }
     node *current_node = *(first_node);
@@ -31,7 +34,7 @@ void insert_node(node **first_node, int value)
     {
         current_node = current_node->next;
     }
-    current_node->next = create_node(value);
+    current_node->next = create_node(value, weight);
 }
 
 bool delete_node(node **first_node, int value)

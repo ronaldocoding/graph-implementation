@@ -38,7 +38,12 @@ void init_graph(vertex_list **list)
     (*list)->vertex_list[0] = NULL;
 }
 
-bool insert_edge(vertex_list **list, int origin_vertex_id, int destiny_vertex_id, bool bidirectional)
+bool insert_edge(
+    vertex_list **list,
+    int origin_vertex_id,
+    int destiny_vertex_id,
+    bool bidirectional,
+    int weight)
 {
     vertex *vertex_origin = NULL, *vertex_destiny = NULL;
 
@@ -60,11 +65,11 @@ bool insert_edge(vertex_list **list, int origin_vertex_id, int destiny_vertex_id
         return false;
     }
 
-    insert_node(&vertex_origin->adj_list, vertex_destiny->id);
+    insert_node(&vertex_origin->adj_list, vertex_destiny->id, weight);
 
     if (bidirectional)
     {
-        insert_node(&vertex_destiny->adj_list, vertex_origin->id);
+        insert_node(&vertex_destiny->adj_list, vertex_origin->id, weight);
     }
 
     return true;
@@ -155,6 +160,7 @@ int get_out_degree(vertex_list *list, int vertex_id)
             return get_node_list_size(list->vertex_list[i]->adj_list);
         }
     }
+    return 0;
 }
 
 int get_in_degree(vertex_list *list, int vertex_id)
@@ -181,63 +187,126 @@ void show_graph(vertex_list *list)
         node *current_node = list->vertex_list[i]->adj_list;
         while (current_node != NULL)
         {
-            printf("%d -> ", current_node->value);
+            printf("(%d) %d -> ", current_node->weight, current_node->value);
             current_node = current_node->next;
         }
         printf("\n");
     }
 }
 
-// int main()
-// {
-//     vertex_list *list1 = NULL;
-//     init_graph(&list1);
-//     insert_vertex(&list1);
-//     insert_vertex(&list1);
-//     insert_vertex(&list1);
-//     insert_vertex(&list1);
-//     insert_vertex(&list1);
+int main()
+{
+    vertex_list *list1 = NULL;
 
-//     insert_edge(&list1, 0, 1, true);
-//     insert_edge(&list1, 0, 2, true);
-//     insert_edge(&list1, 0, 3, true);
+    // Inicializa um grafo vazio
+    init_graph(&list1);
 
-//     insert_edge(&list1, 1, 3, true);
-//     insert_edge(&list1, 1, 4, true);
+    // Adiciona 5 vértices
+    insert_vertex(&list1);
+    insert_vertex(&list1);
+    insert_vertex(&list1);
+    insert_vertex(&list1);
+    insert_vertex(&list1);
 
-//     insert_edge(&list1, 2, 3, true);
+    /*
+     * Adiciona uma aresta bidirecional entre os vértices de índices 0 e 1 
+     * de peso 10
+    */ 
+    insert_edge(&list1, 0, 1, true, 10);
 
-//     insert_edge(&list1, 3, 4, true);
+    /*
+     * Adiciona uma aresta unidirecional entre os vértices de índices 0 e 2, ou
+     * seja, é possível ir do vértice de índice 0 para o de índice 2, mas
+     * não o contrário (até o momento). Essa aresta tem peso 0
+    */ 
+    insert_edge(&list1, 0, 2, false, 0);
 
-//     show_graph(list1);
-//     printf("=================\n");
+    /*
+     * Adiciona uma aresta bidirecional entre os vértices de índices 0 e 3 
+     * de peso 20
+    */ 
+    insert_edge(&list1, 0, 3, true, 20);
 
-//     remove_vertex(&list1, 3);
+    /*
+     * Adiciona uma aresta bidirecional entre os vértices de índices 1 e 3 
+     * de peso 5
+    */ 
+    insert_edge(&list1, 1, 3, true, 5);
 
-//     insert_vertex(&list1);
-//     insert_vertex(&list1);
+    /*
+     * Adiciona uma aresta bidirecional entre os vértices de índices 1 e 4 
+     * de peso 12
+    */ 
+    insert_edge(&list1, 1, 4, true, 12);
 
-//     show_graph(list1);
-//     printf("=================\n");
+    /*
+     * Adiciona uma aresta unidirecional entre os vértices de índices 2 e 3 
+     * de peso 8
+    */ 
+    insert_edge(&list1, 2, 3, false, 8);
 
-//     remove_vertex(&list1, 4);
+    /*
+     * Adiciona uma aresta unidirecional entre os vértices de índices 3 e 4 
+     * de peso 18
+    */ 
+    insert_edge(&list1, 3, 4, false, 18);
 
-//     show_graph(list1);
-//     printf("=================\n");
+    // Mostra o grafo
+    show_graph(list1);
+    printf("=================\n");
 
-//     insert_vertex(&list1);
+    // Remove o vértice de índice 3
+    remove_vertex(&list1, 3);
 
-//     show_graph(list1);
-//     printf("=================\n");
+    // Insere mais dois vértices
+    insert_vertex(&list1);
+    insert_vertex(&list1);
 
-//     insert_edge(&list1, 2, 7, true);
-//     insert_edge(&list1, 2, 4, true);
+    // Mostra o grafo
+    show_graph(list1);
+    printf("=================\n");
 
-//     show_graph(list1);
-//     printf("=================\n");
+    remove_vertex(&list1, 4);
 
-//     destroy_graph(&list1);
+    show_graph(list1);
+    printf("=================\n");
 
-//     show_graph(list1);
-//     printf("=================\n");
-// }
+    // Insere um vértice
+    insert_vertex(&list1);
+
+    // Mostra o grafo
+    show_graph(list1);
+    printf("=================\n");
+
+    /*
+     * Adiciona uma aresta bidirecional entre os vértices de índices 2 e 7 
+     * de peso 30
+    */ 
+    insert_edge(&list1, 2, 7, true, 30);
+
+    /*
+     * Tenta adicionar uma aresta bidirecional entre os vértices de índices 2 e 4 
+     * de peso 16, mas como o vértice de índice 4 não existe, essa aresta não é
+     * adicionada
+    */
+    insert_edge(&list1, 2, 4, true  , 16);
+
+    // Mostra o grafo
+    show_graph(list1);
+    printf("=================\n");
+
+    // Destrói o grafo (limpa todos as arestas e vértices da memória)
+    destroy_graph(&list1);
+
+    // Mostra o grafo vazio
+    show_graph(list1);
+    printf("=================\n");
+
+    /*
+     * Obs: nessa implementação de grafos, quando todas as arestas são
+     * inseridas como bidirecionais, temos um grafo não-direcionado, ou seja,
+     * não existe um sentido entre as arestas. No entanto, quando inserimos no
+     * mínimo uma aresta unidirecional, temos um grafo direcionado, mesmo que
+     * todas as outras arestas sejam bidirecionais
+    */
+}
