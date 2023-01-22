@@ -82,4 +82,6 @@ int main(){
     show_graph(list1);  
     printf("==============================================\n");
     dijkstra(&list1, 0);
+
+    return 0;
 }
