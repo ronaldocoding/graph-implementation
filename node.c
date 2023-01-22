@@ -5,27 +5,29 @@
 #define false 0
 #define bool int
 
-typedef struct node
+typedef struct node 
 {
-    int value;
+    int source;
+    int destiny;
     int weight;
     struct node *next;
 } node;
 
-node *create_node(int value, int weight)
+node *create_node(int source, int destiny, int weight)
 {
     node *new = (node *)malloc(sizeof(node));
-    new->value = value;
+    new->source = source;
+    new->destiny = destiny;
     new->weight = weight;
     new->next = NULL;
     return new;
 }
 
-void insert_node(node **first_node, int value, int weight)
+void insert_node(node **first_node, int source, int destiny, int weight)
 {
     if ((*first_node) == NULL)
     {
-        (*first_node) = create_node(value, weight);
+        (*first_node) = create_node(source, destiny, weight);
         return;
     }
     node *current_node = *(first_node);
@@ -34,10 +36,10 @@ void insert_node(node **first_node, int value, int weight)
     {
         current_node = current_node->next;
     }
-    current_node->next = create_node(value, weight);
+    current_node->next = create_node(source, destiny, weight);
 }
 
-bool delete_node(node **first_node, int value)
+bool delete_node(node **first_node, int destiny)
 {
     node *current = *(first_node), *previous;
     previous = current;
@@ -47,7 +49,7 @@ bool delete_node(node **first_node, int value)
         return false;
     }
 
-    while (current->value != value)
+    while (current->destiny != destiny)
     {
         previous = current;
         current = current->next;
@@ -81,12 +83,12 @@ int get_node_list_size(node *list)
     return size;
 }
 
-bool is_value_on_node_list(node *list, int value)
+bool is_destiny_on_node_list(node *list, int destiny)
 {
     node *current = list;
     while (current != NULL)
     {
-        if (current->value == value)
+        if (current->destiny == destiny)
         {
             return true;
         }

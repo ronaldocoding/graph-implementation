@@ -1,4 +1,4 @@
-#include "graph.c"
+#include "../graph.c"
 
 
 void kahn(vertex_list* graph)
