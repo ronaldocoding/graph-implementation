@@ -57,6 +57,8 @@ void kahn(vertex_list* graph)
         printf("O grafo possui ciclos\n");
         return;
     }
+
+    printf("------- ORDEM TOPOLOGICA COM KAHN ------\n");
     // Print a ordenação topologica
     for (i = 0; i < v; i++)
         printf("%d ", top_order[i]);
