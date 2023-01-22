@@ -62,10 +62,11 @@ bool Bellman_Ford(vertex_list **Graph, int source_id){
             } 
         }
     }
+
+    printf("\nVetice \tdistancia de (%d)\n", source_id);
     for(int k = 0; k < n_vertices; k++){
         if(k != source_id && dist[k] < INT_MAX){
-            printf("A menor distancia do vertice (%d) para o vertice (%d) == %d\n",
-            source_id, k, dist[k]);
+            printf("%d\t%d\n", k, dist[k]);
         }
     }
 
