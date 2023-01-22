@@ -27,7 +27,10 @@ void insert_vertex(vertex_list **list)
 
     (*list)->vertex_list_size++;
 
-    (*list)->vertex_list = realloc((*list)->vertex_list, sizeof(vertex) * ((*list)->vertex_list_size + 1));
+    (*list)->vertex_list = realloc(
+        (*list)->vertex_list, 
+        sizeof(vertex) * ((*list)->vertex_list_size + 1)
+    );
     (*list)->vertex_list[index + 1] = NULL;
 }
 
@@ -136,7 +139,10 @@ bool remove_vertex(vertex_list **list, int vertex_id)
     (*list)->del_count++;
     (*list)->vertex_list_size--;
 
-    (*list)->vertex_list = realloc((*list)->vertex_list, sizeof(vertex) * ((*list)->vertex_list_size + 1));
+    (*list)->vertex_list = realloc(
+        (*list)->vertex_list, 
+        sizeof(vertex) * ((*list)->vertex_list_size + 1)
+    );
     (*list)->vertex_list[(*list)->vertex_list_size] = NULL;
 
     return true;
@@ -172,7 +178,9 @@ int get_in_degree(vertex_list *list, int vertex_id)
     {
         if (list->vertex_list[i]->id != vertex_id)
         {
-            if (is_value_on_node_list(list->vertex_list[i]->adj_list, vertex_id))
+            if (is_value_on_node_list(
+                list->vertex_list[i]->adj_list, 
+                vertex_id))
             {
                 in_degree++;
             }
@@ -287,9 +295,9 @@ int main()
     insert_edge(&list1, 2, 7, true, 30);
 
     /*
-     * Tenta adicionar uma aresta bidirecional entre os vértices de índices 2 e 4
-     * de peso 16, mas como o vértice de índice 4 não existe, essa aresta não é
-     * adicionada
+     * Tenta adicionar uma aresta bidirecional entre os vértices de índices 2 e 
+     * 4 de peso 16, mas como o vértice de índice 4 não existe, essa aresta não 
+     * é adicionada
      */
     insert_edge(&list1, 2, 4, true, 16);
 

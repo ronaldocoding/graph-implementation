@@ -82,7 +82,10 @@ bool is_hamiltonian_by_ore_theorem(vertex_list *list)
             int out_degree_current_edge = get_out_degree(
                 list,
                 current_edge->value);
-            if (current_vertex->out_degree + out_degree_current_edge < list_size)
+            if (
+                current_vertex->out_degree + 
+                out_degree_current_edge < list_size
+            )
             {
                 destroy_graph(&non_adjacency_list_graph);
                 return false;
