@@ -93,3 +93,18 @@ bool is_hamiltonian_by_ore_theorem(vertex_list *list)
     destroy_graph(&non_adjacency_list_graph);
     return true;
 }
+
+bool is_hamiltonian_by_dirac_theorem(vertex_list *list)
+{
+    for (int i = 0; i < list->vertex_list_size; i++)
+    {
+        int out_degree = get_out_degree(list, list->vertex_list[i]->id);
+
+        if (out_degree < (list->vertex_list_size / 2))
+        {
+            return false;
+            break;
+        }
+    }
+    return true;
+}
