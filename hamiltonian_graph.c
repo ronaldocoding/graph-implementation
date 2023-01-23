@@ -111,3 +111,17 @@ bool is_hamiltonian_by_dirac_theorem(vertex_list *list)
     }
     return true;
 }
+
+bool is_hamiltonian(vertex_list *list)
+{
+    if (
+        is_hamiltonian_by_ore_theorem(list) ||
+        is_hamiltonian_by_dirac_theorem(list)
+    )
+    {
+        return true;
+    }
+    else{
+        return false;
+    }
+}
