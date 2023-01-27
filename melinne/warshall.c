@@ -45,12 +45,12 @@ void warshall(vertex_list *graph) {
             else if(i == j){
                 dist[i][j] = 0;
             }
-            
         }
         printf("\n");
     }
 
     for (k = 0; k < v; k++) {
+        printf("\nk: %d\n", k);
         // Escolhe todos os vertices como origem um por um
         for (i = 0; i < v; i++) {
             // Escolhe todos os vertices como destino 
@@ -58,8 +58,10 @@ void warshall(vertex_list *graph) {
             for (j = 0; j < v; j++) {
                 // Se o vertice k está no menor caminho de i para j
                 // então atualiza o valor de dist[i][j]
+                //printf("i[%d]k[%d]: %d k[%d]j[%d] %d < i[%d]j[%d]: %d\n", i, k, dist[i][k], k, j, dist[k][j], i, j, dist[i][j]);
                if(dist[i][k] + dist[k][j] < dist[i][j] && dist[i][j] != 0 && dist[i][k] != INT_MAX
                && dist[k][j] != INT_MAX){
+                    printf("[%d][%d]: %d + [%d][%d]: %d < [%d][%d]: %d\n", i, k, dist[i][k], k, j, dist[k][j], i, j, dist[i][j]);
                     dist[i][j] = dist[i][k] + dist[k][j];
                 
                }
@@ -108,19 +110,16 @@ int main(){
     insert_vertex(&list1);
     insert_vertex(&list1);
     insert_vertex(&list1);
-    insert_vertex(&list1);
 
-    insert_edge(&list1, 0, 1, false, 2);
-    insert_edge(&list1, 1, 2, false, 6);
-    insert_edge(&list1, 2, 1, false, 7);
-    insert_edge(&list1, 3, 2, false, 1);
-    insert_edge(&list1, 3, 4, false, 3);
-    insert_edge(&list1, 4, 0, false, 1);
-    insert_edge(&list1, 4, 1, false, 4);
+    insert_edge(&list1, 0, 1, false, 1);
+    insert_edge(&list1, 0, 3, false, 10);
+    insert_edge(&list1, 0, 2, false, 5);
+    insert_edge(&list1, 1, 4, false, 2);
+    insert_edge(&list1, 2, 4, false, 2);
 
     show_graph(list1);
     printf("====================================\n");
-    printf("---------- WARSHALL -----------\n");
+    printf("------------ WARSHALL -------------\n");
     warshall(list1);
 
     return 0;

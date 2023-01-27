@@ -1,32 +1,18 @@
 #include "../graph.c"
 
-void findCircuits(vertex_list *graph) {
-    for (int i = 0; i < graph->vertex_list_size; i++) {
-        graph->vertex_list[i]->visited = false;
-    }
 
-    for (int i = 0; i < graph->vertex_list_size; i++) {
-        if (!graph->vertex_list[i]->visited) {
-            dfs(graph->vertex_list[i]);
+void dfs(vertex_list *graph, int pos){
+    pos++;
+    graph->vertex_list[pos]->visited = true;
+    printf("%d ", graph->vertex_list[pos]->id);
+    for(int i = 0; i < graph->vertex_list_size; i++){
+        if(!(graph->vertex_list[pos]->visited)){
+            dfs(graph, graph->vertex_list[pos]->id);
         }
     }
 }
 
-void dfs(vertex *v) {
-    v->visited = true;
-    node *adj = v->adj_list;
-    while (adj != NULL) {
-        int dest = adj->destiny;
-        if (!()) {
-            dfs(adj->destiny);
-        } else {
-            // A cycle has been found
-            // Add code here to record or print the cycle
-        }
-        adj = adj->next;
-    }
-    v->visited = false;
-}
+
 
 int main(){
 
@@ -42,14 +28,14 @@ int main(){
     insert_vertex(&list1);
     insert_vertex(&list1);
 
-    insert_edge(&list1, 0, 1, false, 0);
-    insert_edge(&list1, 0, 2, false, 0);
-    insert_edge(&list1, 0, 3, false, 0);
-    insert_edge(&list1, 1, 3, false, 0);
-    insert_edge(&list1, 2, 1, false, 0);
-    insert_edge(&list1, 2, 4, false, 0);
+    insert_edge(&list1, 0, 1, false, 1);
+    insert_edge(&list1, 0, 2, false, 2);
+    insert_edge(&list1, 0, 3, false, 3);
+    insert_edge(&list1, 1, 3, false, 4);
+    insert_edge(&list1, 2, 1, false, 5);
+    insert_edge(&list1, 2, 4, false, 6);
 
-    DFS(list1, 1);
+    dfs(list1, 0);
 
     return 0;
 }
