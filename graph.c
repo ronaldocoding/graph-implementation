@@ -204,6 +204,17 @@ void show_graph(vertex_list *list)
     }
 }
 
+int get_vertex_index(vertex_list *list, int vertex_id)
+{
+    for (int i = 0; i < list->vertex_list_size; i++)
+    {
+        if (list->vertex_list[i]->id == vertex_id) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 int main()
 {
     vertex_list *list1 = NULL;
