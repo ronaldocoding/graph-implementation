@@ -124,7 +124,7 @@ priority_queue *get_vertex_by_edge(priority_queue *queue, node *edge)
 
     while (current != NULL)
     {
-        if (current->current_vertex->id == edge->value)
+        if (current->current_vertex->id == edge->destiny)
         {
             return current;
         }
