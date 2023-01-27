@@ -66,22 +66,17 @@ int main(){
     insert_vertex(&list1);
     insert_vertex(&list1);
     insert_vertex(&list1);
-    insert_vertex(&list1);
-    insert_vertex(&list1);
-    insert_vertex(&list1);
+    //insert_vertex(&list1);
 
-    insert_edge(&list1, 0, 1, true, 10); 
-    insert_edge(&list1, 0, 2, true, 1);
-    insert_edge(&list1, 0, 3, true, 20);
-    insert_edge(&list1, 1, 3, true, 5);
-    insert_edge(&list1, 1, 4, true, 12);
-    insert_edge(&list1, 2, 3, true, 8);
-    insert_edge(&list1, 3, 4, true, 18);
+    insert_edge(&list1, 0, 1, false, 10); 
+    insert_edge(&list1, 1, 2, false, -10);
+    insert_edge(&list1, 3, 1, false, 10);
+    insert_edge(&list1, 3, 2, false, 5);
     printf("====================== GRAFO ===================\n");
     // Mostra o grafo
     show_graph(list1);  
     printf("==============================================\n");
-    dijkstra(&list1, 0);
+    dijkstra(&list1, 3);
 
     return 0;
 }

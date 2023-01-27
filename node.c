@@ -96,3 +96,40 @@ bool is_destiny_on_node_list(node *list, int destiny)
     }
     return false;
 }
+
+void push(node **head, node *new_head)
+{
+    if (*head == NULL)
+    {
+        *head = new_head;
+    }
+    else
+    {
+        new_head->next = *head;
+        *head = new_head;
+    }
+}
+
+node *pop(node **head)
+{
+    if (*head != NULL)
+    {
+        node *old_head = *head;
+        *head = (*head)->next;
+        old_head->next = NULL;
+        return old_head;
+    }
+    return NULL;
+}
+
+int get_total_cost(node **head)
+{
+    int total = 0;
+    while (*head != NULL)
+    {
+        node *old_head = pop(head);
+        total += old_head->weight;
+        free(old_head);
+    }
+    return total;
+}

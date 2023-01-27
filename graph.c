@@ -5,6 +5,8 @@
 typedef struct vertex
 {
     int id;
+    bool visited;
+    int out_degree;
     node *adj_list;
 } vertex;
 
@@ -25,7 +27,10 @@ void insert_vertex(vertex_list **list)
 
     (*list)->vertex_list_size++;
 
-    (*list)->vertex_list = realloc((*list)->vertex_list, sizeof(vertex) * ((*list)->vertex_list_size + 1));
+    (*list)->vertex_list = realloc(
+        (*list)->vertex_list, 
+        sizeof(vertex) * ((*list)->vertex_list_size + 1)
+    );
     (*list)->vertex_list[index + 1] = NULL;
 }
 
@@ -136,7 +141,10 @@ bool remove_vertex(vertex_list **list, int vertex_id)
     (*list)->del_count++;
     (*list)->vertex_list_size--;
 
-    (*list)->vertex_list = realloc((*list)->vertex_list, sizeof(vertex) * ((*list)->vertex_list_size + 1));
+    (*list)->vertex_list = realloc(
+        (*list)->vertex_list, 
+        sizeof(vertex) * ((*list)->vertex_list_size + 1)
+    );
     (*list)->vertex_list[(*list)->vertex_list_size] = NULL;
 
     return true;
@@ -196,4 +204,15 @@ void show_graph(vertex_list *list)
         }
         printf("\n");
     }
+}
+
+int get_vertex_index(vertex_list *list, int vertex_id)
+{
+    for (int i = 0; i < list->vertex_list_size; i++)
+    {
+        if (list->vertex_list[i]->id == vertex_id) {
+            return i;
+        }
+    }
+    return -1;
 }
