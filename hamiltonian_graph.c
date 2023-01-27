@@ -125,7 +125,8 @@ bool is_hamiltonian(graph *list)
     }
 }
 
-int main(){
+int main()
+{
 
     graph *list1 = NULL;
 

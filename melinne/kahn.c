@@ -12,7 +12,7 @@ void kahn(graph *graph)
     // Percorre a lista de adjacência para preencher o grau de cada vertice
     for (i = 0; i < v; i++)
     {
-        struct node* temp = graph->vertex_list[i]->adj_list;
+        struct node *temp = graph->vertex_list[i]->adj_list;
         while (temp)
         {
             int index = temp->destiny;
@@ -35,7 +35,7 @@ void kahn(graph *graph)
     // Cria um vetor para armazenar o resultado (uma ordenação topológica dos vértices)
     int top_order[v];
 
-     while (front <= rear)
+    while (front <= rear)
     {
         // Desenfileira um vertice da fila
         int u = queue[front++];
@@ -43,7 +43,7 @@ void kahn(graph *graph)
 
         // Itera por todos os vértices adjacentes do vértice desenfileirado e diminui seu grau de entrada
         // Faça isso até o grau de entrada se tornar zero e adicione na fila
-        struct node* temp = graph->vertex_list[u]->adj_list;
+        struct node *temp = graph->vertex_list[u]->adj_list;
         while (temp)
         {
             if (!(--in_degree[temp->destiny]))
@@ -81,7 +81,6 @@ int main()
     insert_vertex(&list1);
     insert_vertex(&list1);
 
-   
     insert_edge(&list1, 0, 1, false, 5);
 
     insert_edge(&list1, 0, 2, false, 1);
@@ -111,10 +110,8 @@ int main()
     printf("=================\n");
     // Mostra o grafo
     show_graph(list1);
-    
+
     printf("=================\n");
-    
+
     kahn(list1);
-    
-    
 }
