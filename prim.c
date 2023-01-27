@@ -133,7 +133,33 @@ priority_queue *get_vertex_by_edge(priority_queue *queue, node *edge)
     return NULL;
 }
 
-void prim(graph **list)
+graph *convert_queue_to_graph(priority_queue *queue)
+{
+    graph *mst_graph = NULL;
+    init_graph(&mst_graph);
+    priority_queue *current = queue;
+    while (current != NULL)
+    {
+        insert_vertex(&mst_graph);
+        current = current->next;
+    }
+    current = queue;
+
+    while (current != NULL)
+    {
+        if (current->parent == NULL)
+        {
+            current = current->next;
+            continue;
+        }
+        insert_edge(&mst_graph, current->parent->id, current->current_vertex->id, true, current->key);
+        current = current->next;
+    }
+
+    return mst_graph;
+}
+
+graph *prim(graph **list)
 {
     priority_queue *queue = get_priority_queue((*list)), *used_queue = NULL;
 
@@ -164,7 +190,8 @@ void prim(graph **list)
             current_edge = current_edge->next;
         }
     }
-    printf("AAAAAAAAAAAAAAAAAA");
+
+    return convert_queue_to_graph(used_queue);
 }
 
 int main()
@@ -194,5 +221,6 @@ int main()
     show_graph(list1);
     printf("=================\n");
 
-    prim(&list1);
+    show_graph(prim(&list1));
+    printf("=================\n");
 }
