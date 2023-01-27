@@ -1,47 +1,41 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "graph.c"
 
-struct Node {
-    int data;
-    struct Node* left;
-    struct Node* right;
-};
+void DFS(vertex_list *graph, int vertex_id)
+{
+    bool visited[graph->vertex_list_size];
 
-struct Node* newNode(int data) {
-    struct Node* node = (struct Node*) malloc(sizeof(struct Node));
-    node->data = data;
-    node->left = NULL;
-    node->right = NULL;
-    return node;
-}
-
-void dfs(struct Node* root) {
-    if (root == NULL) {
-        return;
+    for (int i = 0; i < graph->vertex_list_size; i++)
+    {
+        visited[i] = false;
     }
-    printf("%d ", root->data);
-    dfs(root->left);
-    dfs(root->right);
-}
 
-int main() {
-    /*
-            1
-          /   \
-         2     3
-        / \
-       4   5  
-    */
-    struct Node* root = newNode(1);
-    
-    root->left = newNode(2);
-    root->right = newNode(3);
-    root->left->left = newNode(4);
-    root->left->right = newNode(5);
-    
-    printf("Busca em profundidade: ");
-    dfs(root);
-    printf("\n");
-    
-    return 0;
+    node *stack = NULL;
+
+    push(&stack, create_node(vertex_id, 0));
+
+    printf("Início -> ");
+    while (stack != NULL)
+    {
+        node *current = pop(&stack);
+        int vertex_index = get_vertex_index(graph, current->value);
+
+        if (!visited[vertex_index])
+        {
+            printf("%d -> ", current->value);
+            visited[vertex_index] = true;
+        }
+
+        node *adj = graph->vertex_list[vertex_index]->adj_list;
+
+        while (adj != NULL)
+        {
+            int index = get_vertex_index(graph, adj->value);
+            if (!visited[index])
+            {
+                push(&stack, create_node(adj->value, adj->weight));
+            }
+            adj = adj->next;
+        }
+    }
+    printf("Fim\n\n");
 }
