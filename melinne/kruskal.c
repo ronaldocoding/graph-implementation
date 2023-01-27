@@ -1,7 +1,7 @@
 #include "../graph.c"
 
 // Separa os vertices em conjuntos disjuntos
-void make_set(vertex_list *Graph, int *parent_set, int *rank){
+void make_set(graph *Graph, int *parent_set, int *rank){
   int i;
   
     for (i = 0; i < Graph->vertex_list_size; i++)
@@ -38,7 +38,7 @@ void union_set( int * parent_set, int *rank, int element_id_a, int  element_id_b
   }
 }
 
-void kruskal(vertex_list *Graph)
+void kruskal(graph *Graph)
 {
     int e = 0, i = 0;
     node *temp;
@@ -85,7 +85,7 @@ void kruskal(vertex_list *Graph)
 }
 
 int main(){
-    vertex_list *list1 = NULL;
+    graph *list1 = NULL;
 
     // Inicializa um grafo vazio
     init_graph(&list1);

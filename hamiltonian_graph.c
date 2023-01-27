@@ -1,19 +1,19 @@
 #include "graph.c"
 
 bool is_adjacency(
-    vertex_list *list,
+    graph *list,
     int vertex_origin_id,
     int vertex_destiny_id)
 {
-    return is_value_on_node_list(
+    return is_destiny_on_node_list(
         list->vertex_list[vertex_origin_id]->adj_list,
         vertex_destiny_id);
 }
 
-bool is_hamiltonian_by_ore_theorem(vertex_list *list)
+bool is_hamiltonian_by_ore_theorem(graph *list)
 {
     // Cria grafo com listas de não-adjacência
-    vertex_list *non_adjacency_list_graph = NULL;
+    graph *non_adjacency_list_graph = NULL;
     init_graph(&non_adjacency_list_graph);
 
     // Armazena tamanho da lista
@@ -30,9 +30,8 @@ bool is_hamiltonian_by_ore_theorem(vertex_list *list)
     for (int i = 0; i < list_size; i++)
     {
         list->vertex_list[i]->out_degree = get_out_degree(
-            list, 
-            list->vertex_list[i]->id
-        );
+            list,
+            list->vertex_list[i]->id);
     }
 
     // Copia número de exclusões do grafo original
@@ -81,11 +80,11 @@ bool is_hamiltonian_by_ore_theorem(vertex_list *list)
         {
             int out_degree_current_edge = get_out_degree(
                 list,
-                current_edge->value);
+                current_edge->destiny);
             if (
-                current_vertex->out_degree + 
-                out_degree_current_edge < list_size
-            )
+                current_vertex->out_degree +
+                    out_degree_current_edge <
+                list_size)
             {
                 destroy_graph(&non_adjacency_list_graph);
                 return false;
@@ -97,7 +96,7 @@ bool is_hamiltonian_by_ore_theorem(vertex_list *list)
     return true;
 }
 
-bool is_hamiltonian_by_dirac_theorem(vertex_list *list)
+bool is_hamiltonian_by_dirac_theorem(graph *list)
 {
     for (int i = 0; i < list->vertex_list_size; i++)
     {
@@ -112,16 +111,42 @@ bool is_hamiltonian_by_dirac_theorem(vertex_list *list)
     return true;
 }
 
-bool is_hamiltonian(vertex_list *list)
+bool is_hamiltonian(graph *list)
 {
     if (
         is_hamiltonian_by_ore_theorem(list) ||
-        is_hamiltonian_by_dirac_theorem(list)
-    )
+        is_hamiltonian_by_dirac_theorem(list))
     {
         return true;
     }
-    else{
+    else
+    {
         return false;
     }
+}
+
+int main(){
+
+    graph *list1 = NULL;
+
+    // Inicializa um grafo vazio
+    init_graph(&list1);
+
+    // Adiciona 4 vértices
+    insert_vertex(&list1);
+    insert_vertex(&list1);
+    insert_vertex(&list1);
+    insert_vertex(&list1);
+    insert_vertex(&list1);
+
+    insert_edge(&list1, 0, 1, false, 1);
+    insert_edge(&list1, 0, 2, false, 2);
+    insert_edge(&list1, 0, 3, false, 3);
+    insert_edge(&list1, 1, 3, false, 4);
+    insert_edge(&list1, 2, 1, false, 5);
+    insert_edge(&list1, 2, 4, false, 6);
+
+    is_hamiltonian(list1);
+
+    return 0;
 }

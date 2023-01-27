@@ -1,6 +1,6 @@
 #include "../graph.c"
 
-void findCircuits(vertex_list *graph) {
+void findCircuits(graph *graph) {
     for (int i = 0; i < graph->vertex_list_size; i++) {
         graph->vertex_list[i]->visited = false;
     }
@@ -30,7 +30,7 @@ void dfs(vertex *v) {
 
 int main(){
 
-    vertex_list *list1 = NULL;
+    graph *list1 = NULL;
 
     // Inicializa um grafo vazio
     init_graph(&list1);

@@ -2,7 +2,7 @@
 
 int main()
 {
-    vertex_list *list1 = NULL;
+    graph  *list1 = NULL;
 
     // Inicializa um grafo vazio
     init_graph(&list1);

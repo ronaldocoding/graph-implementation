@@ -1,7 +1,7 @@
 #include "../graph.c"
 #include <limits.h>
 
-int **adj_list_to_adj_matrix(vertex_list *graph) {
+int **adj_list_to_adj_matrix(graph *graph) {
     int i, j;
     node *current;
 
@@ -30,7 +30,7 @@ int **adj_list_to_adj_matrix(vertex_list *graph) {
     return adj_matrix;
 }
 
-void warshall(vertex_list *graph) {
+void warshall(graph *graph) {
     int i, j, k;
     node *current;
     int v = graph->vertex_list_size;
@@ -98,7 +98,7 @@ void warshall(vertex_list *graph) {
 
 
 int main(){
-    vertex_list *list1 = NULL;
+    graph *list1 = NULL;
 
     // Inicializa um grafo vazio
     init_graph(&list1);

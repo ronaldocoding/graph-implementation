@@ -1,7 +1,7 @@
 #include "../graph.c"
 
 
-void kahn(vertex_list* graph)
+void kahn(graph *graph)
 {
     int v = graph->vertex_list_size;
     int in_degree[v];
@@ -66,7 +66,7 @@ void kahn(vertex_list* graph)
 
 int main()
 {
-    vertex_list *list1 = NULL;
+    graph *list1 = NULL;
 
     // Inicializa um grafo vazio
     init_graph(&list1);

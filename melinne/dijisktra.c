@@ -2,7 +2,7 @@
 #include <limits.h>
 #include <stdbool.h>
 
-void dijkstra(vertex_list **Graph, int start)
+void dijkstra(graph **Graph, int start)
 {
     int distance[(*Graph)->vertex_list_size];
     int visited[(*Graph)->vertex_list_size];
@@ -56,7 +56,7 @@ void dijkstra(vertex_list **Graph, int start)
 }
 
 int main(){
-    vertex_list *list1 = NULL;
+    graph *list1 = NULL;
 
     // Inicializa um grafo vazio
     init_graph(&list1);
