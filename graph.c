@@ -10,14 +10,14 @@ typedef struct vertex
     node *adj_list;
 } vertex;
 
-typedef struct vertex_list
+typedef struct graph
 {
     int vertex_list_size;
     int del_count;
     vertex **vertex_list;
-} vertex_list;
+} graph;
 
-void insert_vertex(vertex_list **list)
+void insert_vertex(graph **list)
 {
     int index = (*list)->vertex_list_size;
 
@@ -34,9 +34,9 @@ void insert_vertex(vertex_list **list)
     (*list)->vertex_list[index + 1] = NULL;
 }
 
-void init_graph(vertex_list **list)
+void init_graph(graph **list)
 {
-    (*list) = malloc(sizeof(vertex_list));
+    (*list) = malloc(sizeof(graph));
     (*list)->vertex_list = malloc(sizeof(vertex *));
     (*list)->vertex_list_size = 0;
     (*list)->del_count = 0;
@@ -44,7 +44,7 @@ void init_graph(vertex_list **list)
 }
 
 bool insert_edge(
-    vertex_list **list,
+    graph **list,
     int origin_vertex_id,
     int destiny_vertex_id,
     bool bidirectional,
@@ -82,7 +82,7 @@ bool insert_edge(
     return true;
 }
 
-bool remove_edge(vertex_list **list, int vertex_a_id, int vertex_b_id)
+bool remove_edge(graph **list, int vertex_a_id, int vertex_b_id)
 {
     bool deleted_a = false, deleted_b = false;
 
@@ -109,7 +109,7 @@ bool remove_edge(vertex_list **list, int vertex_a_id, int vertex_b_id)
     return false;
 }
 
-bool remove_vertex(vertex_list **list, int vertex_id)
+bool remove_vertex(graph **list, int vertex_id)
 {
     bool vertex_exists = false;
     int vertex_pos;
@@ -150,7 +150,7 @@ bool remove_vertex(vertex_list **list, int vertex_id)
     return true;
 }
 
-void destroy_graph(vertex_list **list)
+void destroy_graph(graph **list)
 {
     if ((*list)->vertex_list[0] == NULL)
     {
@@ -161,7 +161,7 @@ void destroy_graph(vertex_list **list)
     destroy_graph(list);
 }
 
-int get_out_degree(vertex_list *list, int vertex_id)
+int get_out_degree(graph *list, int vertex_id)
 {
     for (int i = 0; i < list->vertex_list_size; i++)
     {
@@ -173,7 +173,7 @@ int get_out_degree(vertex_list *list, int vertex_id)
     return 0;
 }
 
-int get_in_degree(vertex_list *list, int vertex_id)
+int get_in_degree(graph *list, int vertex_id)
 {
     int in_degree = 0;
     for (int i = 0; i < list->vertex_list_size; i++)
@@ -189,7 +189,7 @@ int get_in_degree(vertex_list *list, int vertex_id)
     return in_degree;
 }
 
-void show_graph(vertex_list *list)
+void show_graph(graph *list)
 {
     for (int i = 0; i < list->vertex_list_size; i++)
     {
@@ -206,7 +206,7 @@ void show_graph(vertex_list *list)
     }
 }
 
-int get_vertex_index(vertex_list *list, int vertex_id)
+int get_vertex_index(graph *list, int vertex_id)
 {
     for (int i = 0; i < list->vertex_list_size; i++)
     {

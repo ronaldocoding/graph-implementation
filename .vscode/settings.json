@@ -1,5 +1,9 @@
 {
-    "files.associations": {
-        "type_traits": "c"
-    }
+  "cSpell.words": [
+    "kahn",
+    "listadj"
+  ],
+  "files.associations": {
+    "math.h": "c"
+  }
 }
