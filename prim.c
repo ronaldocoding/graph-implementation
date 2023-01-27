@@ -1,5 +1,5 @@
-#include "graph.c"
 #include <math.h>
+#include "graph.c"
 
 typedef struct priority_queue
 {
